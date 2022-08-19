@@ -1,6 +1,6 @@
 package com.wjb.pojo;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 
 public class Users {
     @Column(name = "USER")
