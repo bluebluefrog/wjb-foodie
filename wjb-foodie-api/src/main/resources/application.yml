@@ -40,3 +40,15 @@ mybatis:
   type-aliases-package: com.wjb.pojo          # 所有POJO类所在包路径
   mapper-locations: classpath:mapper/*.xml      # xml mapper映射文件 classpath指的是所有resources
 
+############################################################
+#
+# mybatis mapper 配置
+#
+############################################################
+# 通用 Mapper 配置
+mapper:
+  mappers: com.wjb.my.mapper.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+
