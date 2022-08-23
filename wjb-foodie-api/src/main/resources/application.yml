@@ -39,6 +39,8 @@ spring:
 mybatis:
   type-aliases-package: com.wjb.pojo          # 所有POJO类所在包路径
   mapper-locations: classpath:mapper/*.xml      # xml mapper映射文件 classpath指的是所有resources
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 ############################################################
 #

@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Sid sid;
 
-    public static final String USER_FACE = "src/main/resources/img/user.png";
+    public static final String USER_FACE = "https://f.chongwunet.com/chongwunet/202204/8d/ba2584faeaf77c.png";
 
     @Override
     public boolean queryUsernameExist(String username) {
@@ -72,5 +72,21 @@ public class UserServiceImpl implements UserService {
         userMapper.insert(user);
 
         return user;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public FoodieUser queryUserForLogin(String username, String password){
+
+
+        Example example = new Example(FoodieUser.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        criteria.andEqualTo("username",username);
+        criteria.andEqualTo("password", password);
+
+        FoodieUser foodieUser = userMapper.selectOneByExample(example);
+
+        return foodieUser;
     }
 }
