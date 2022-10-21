@@ -3,27 +3,26 @@ package com.wjb.controller;
 import com.wjb.enums.YesOrNo;
 import com.wjb.pojo.*;
 import com.wjb.pojo.vo.CategoryVO;
+import com.wjb.pojo.vo.CommentLevelCountsVO;
 import com.wjb.pojo.vo.ItemInfoVO;
 import com.wjb.pojo.vo.NewItemsVO;
 import com.wjb.service.CarouselService;
 import com.wjb.service.CategoryService;
 import com.wjb.service.ItemService;
 import com.wjb.utils.JSONResult;
+import com.wjb.utils.PagedGridResult;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("items")
-public class ItemsController {
+public class ItemsController extends BaseController{
 
     @Autowired
     private ItemService itemService;
-
 
     @GetMapping("/info/{itemId}")
     public JSONResult info(@PathVariable String itemId){
@@ -49,4 +48,36 @@ public class ItemsController {
         return JSONResult.ok(itemInfoVO);
     }
 
+    @GetMapping("/commentLevel")
+    public JSONResult getCommentsCount(@RequestParam String itemId){
+
+        if(itemId==null){
+            return JSONResult.errorMsg("商品不存在");
+        }
+
+        CommentLevelCountsVO commentLevelCountsVO = itemService.queryCommentCounts(itemId);
+
+        return JSONResult.ok(commentLevelCountsVO);
+    }
+
+    @GetMapping("/comments")
+    public JSONResult getComments(@RequestParam String itemId, @RequestParam Integer level,
+                                  @RequestParam Integer page,@RequestParam Integer pageSize){
+
+        if(itemId==null){
+            return JSONResult.errorMsg("商品不存在");
+        }
+
+        if (page == null) {
+            page = COMMENT_PAGE;
+        }
+
+        if (pageSize == null) {
+            pageSize = COMMENT_PAGE_SIZE;
+        }
+
+        PagedGridResult pagedGridResult = itemService.queryPagedComments(itemId, level, page, pageSize);
+
+        return JSONResult.ok(pagedGridResult);
+    }
 }
