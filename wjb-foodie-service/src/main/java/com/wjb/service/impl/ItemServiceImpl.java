@@ -7,6 +7,7 @@ import com.wjb.mapper.*;
 import com.wjb.pojo.*;
 import com.wjb.pojo.vo.CommentLevelCountsVO;
 import com.wjb.pojo.vo.ItemCommentVO;
+import com.wjb.pojo.vo.SearchItemsVO;
 import com.wjb.service.ItemService;
 import com.wjb.utils.DesensitizationUtil;
 import com.wjb.utils.PagedGridResult;
@@ -102,12 +103,12 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public PagedGridResult queryPagedComments(String itemId, Integer level, Integer page, Integer pageSize) {
 
-        //分页
-        PageHelper.startPage(page, pageSize);
-
         Map<String, Object> map = new HashMap<>();
         map.put("itemId", itemId);
         map.put("level", level);
+
+        //分页
+        PageHelper.startPage(page, pageSize);
 
         List<ItemCommentVO> itemCommentVOList = itemsMapperCustom.queryItemComments(map);
 
@@ -116,6 +117,42 @@ public class ItemServiceImpl implements ItemService {
         }
 
         PagedGridResult pagedGridResult = setterPagedGrid(itemCommentVOList, page);
+
+        return pagedGridResult;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public  PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize){
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("keywords", keywords);
+        map.put("sort", sort);
+
+        //分页
+        PageHelper.startPage(page, pageSize);
+
+        List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItems(map);
+
+        PagedGridResult pagedGridResult = setterPagedGrid(searchItemsVOS, page);
+
+        return pagedGridResult;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public  PagedGridResult catItems(String catId, String sort, Integer page, Integer pageSize){
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("catId", catId);
+        map.put("sort", sort);
+
+        //分页
+        PageHelper.startPage(page, pageSize);
+
+        List<SearchItemsVO> searchItemsVOS = itemsMapperCustom.searchItemsByThirdCat(map);
+
+        PagedGridResult pagedGridResult = setterPagedGrid(searchItemsVOS, page);
 
         return pagedGridResult;
     }

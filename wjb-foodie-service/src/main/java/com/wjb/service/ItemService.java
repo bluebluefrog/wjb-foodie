@@ -25,4 +25,8 @@ public interface ItemService {
     CommentLevelCountsVO queryCommentCounts(String itemId);
 
     PagedGridResult queryPagedComments(String itemId, Integer level, Integer page, Integer pageSize);
+
+    PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize);
+
+    PagedGridResult catItems(String catId, String sort, Integer page, Integer pageSize);
 }

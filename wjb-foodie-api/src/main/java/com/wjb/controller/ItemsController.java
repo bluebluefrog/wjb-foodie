@@ -80,4 +80,38 @@ public class ItemsController extends BaseController{
 
         return JSONResult.ok(pagedGridResult);
     }
+
+    @GetMapping("/search")
+    public JSONResult searchItems(@RequestParam String keywords, @RequestParam String sort,
+                                  @RequestParam Integer page,@RequestParam Integer pageSize){
+
+        if (page == null) {
+            page = COMMENT_PAGE;
+        }
+
+        if (pageSize == null) {
+            pageSize = PAGE_SIZE;
+        }
+
+        PagedGridResult pagedGridResult = itemService.searchItems(keywords, sort, page, pageSize);
+
+        return JSONResult.ok(pagedGridResult);
+    }
+
+    @GetMapping("/catItems")
+    public JSONResult catItems(@RequestParam String catId, @RequestParam String sort,
+                                  @RequestParam Integer page,@RequestParam Integer pageSize){
+
+        if (page == null) {
+            page = COMMENT_PAGE;
+        }
+
+        if (pageSize == null) {
+            pageSize = PAGE_SIZE;
+        }
+
+        PagedGridResult pagedGridResult = itemService.catItems(catId, sort, page, pageSize);
+
+        return JSONResult.ok(pagedGridResult);
+    }
 }
