@@ -2,10 +2,7 @@ package com.wjb.controller;
 
 import com.wjb.enums.YesOrNo;
 import com.wjb.pojo.*;
-import com.wjb.pojo.vo.CategoryVO;
-import com.wjb.pojo.vo.CommentLevelCountsVO;
-import com.wjb.pojo.vo.ItemInfoVO;
-import com.wjb.pojo.vo.NewItemsVO;
+import com.wjb.pojo.vo.*;
 import com.wjb.service.CarouselService;
 import com.wjb.service.CategoryService;
 import com.wjb.service.ItemService;
@@ -119,15 +116,13 @@ public class ItemsController extends BaseController{
     @GetMapping("/refresh")
     public JSONResult catItems(@RequestParam String itemSpecIds){
 
-        System.out.println(itemSpecIds);
-
         if (StringUtils.isBlank(itemSpecIds)) {
             return JSONResult.ok();
         }
 
-        List<ItemsSpec> itemsSpecs = itemService.queryItemSpecList(itemSpecIds);
+        List<ShopcartVO> shopcartVOS = itemService.queryItemsBySpecId(itemSpecIds);
 
 
-        return JSONResult.ok(itemsSpecs);
+        return JSONResult.ok(shopcartVOS);
     }
 }

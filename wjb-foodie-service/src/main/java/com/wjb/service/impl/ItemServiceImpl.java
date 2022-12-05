@@ -162,15 +162,10 @@ public class ItemServiceImpl implements ItemService {
 
         //id拼接转数组
         String ids[] = specIds.split(",");
-        List<String> specIdsList=new ArrayList<>();
+        List<String> specIdsList = new ArrayList<>();
         Collections.addAll(specIdsList, ids);
 
-        for (String spec:specIdsList
-             ) {
-            System.out.println(spec);
-        }
-        List<ShopcartVO> shopcartVOS = itemsMapperCustom.queryItemsBySpecIds(specIdsList);
-        return shopcartVOS;
+        return itemsMapperCustom.queryItemsBySpecIds(specIdsList);
     }
 
    private Integer getComments(String itemId,Integer level){

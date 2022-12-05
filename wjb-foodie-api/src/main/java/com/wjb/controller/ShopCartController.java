@@ -28,4 +28,19 @@ public class ShopCartController extends BaseController{
         return JSONResult.ok();
     }
 
+    @PostMapping("/del")
+    public JSONResult delete(@RequestParam String userId,
+                          @RequestBody String itemSpecId,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+
+        if (StringUtils.isBlank(userId)||StringUtils.isBlank(itemSpecId)) {
+            return JSONResult.errorMsg("");
+        }
+
+        //TODO 前端用户登录后 购物车中删除商品 同步到后端缓存
+
+        return JSONResult.ok();
+    }
+
 }
