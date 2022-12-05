@@ -8,6 +8,7 @@ import com.wjb.pojo.*;
 import com.wjb.pojo.vo.CommentLevelCountsVO;
 import com.wjb.pojo.vo.ItemCommentVO;
 import com.wjb.pojo.vo.SearchItemsVO;
+import com.wjb.pojo.vo.ShopcartVO;
 import com.wjb.service.ItemService;
 import com.wjb.utils.DesensitizationUtil;
 import com.wjb.utils.PagedGridResult;
@@ -17,9 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -155,6 +154,23 @@ public class ItemServiceImpl implements ItemService {
         PagedGridResult pagedGridResult = setterPagedGrid(searchItemsVOS, page);
 
         return pagedGridResult;
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ShopcartVO> queryItemsBySpecId(String specIds){
+
+        //id拼接转数组
+        String ids[] = specIds.split(",");
+        List<String> specIdsList=new ArrayList<>();
+        Collections.addAll(specIdsList, ids);
+
+        for (String spec:specIdsList
+             ) {
+            System.out.println(spec);
+        }
+        List<ShopcartVO> shopcartVOS = itemsMapperCustom.queryItemsBySpecIds(specIdsList);
+        return shopcartVOS;
     }
 
    private Integer getComments(String itemId,Integer level){

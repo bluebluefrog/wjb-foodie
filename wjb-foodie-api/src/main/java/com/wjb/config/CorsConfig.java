@@ -16,7 +16,7 @@ public class CorsConfig {
         //1添加cores配置信息
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         //开启前端可访问的端口
-        corsConfiguration.addAllowedOrigin("http://localhost:8080");
+        corsConfiguration.addAllowedOrigin("*");
 
         //是否开启凭证，让请求数据携带内容，发送cookie信息
         corsConfiguration.setAllowCredentials(true);

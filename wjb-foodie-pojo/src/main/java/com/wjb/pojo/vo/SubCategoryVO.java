@@ -1,8 +1,5 @@
 package com.wjb.pojo.vo;
 
-/**
- *三级分类vo
- */
 public class SubCategoryVO {
 
     private Integer subId;

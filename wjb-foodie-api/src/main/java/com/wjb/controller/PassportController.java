@@ -78,6 +78,9 @@ public class PassportController {
         //参数1req2resp3name4string类型存储信息5isEncode代表加密
         CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(user), true);
 
+        //TODO 生成用户token 存储redis会话
+        //TODO 同步购物车数据
+
         return JSONResult.ok(user);
     }
 
@@ -112,11 +115,17 @@ public class PassportController {
         //参数1req2resp3name4string类型存储信息5isEncode代表加密
         CookieUtils.setCookie(request, response, "user", JsonUtils.objectToJson(user),true);
 
+        //TODO 生成用户token 存储redis会话
+        //TODO 同步购物车数据
+
         return JSONResult.ok(user);
     }
 
     @PostMapping("/logout")
     public JSONResult logout(@RequestParam String userId, HttpServletRequest request, HttpServletResponse response){
+
+        //TODO 用户退出 清空购物车
+        //TODO 分布式会话中需要清除用户数据
 
         //清除用户相关的cookie
         CookieUtils.deleteCookie(request, response, "user");

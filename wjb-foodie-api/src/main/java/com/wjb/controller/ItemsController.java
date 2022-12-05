@@ -12,6 +12,7 @@ import com.wjb.service.ItemService;
 import com.wjb.utils.JSONResult;
 import com.wjb.utils.PagedGridResult;
 import io.swagger.models.auth.In;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -113,5 +114,20 @@ public class ItemsController extends BaseController{
         PagedGridResult pagedGridResult = itemService.catItems(catId, sort, page, pageSize);
 
         return JSONResult.ok(pagedGridResult);
+    }
+
+    @GetMapping("/refresh")
+    public JSONResult catItems(@RequestParam String itemSpecIds){
+
+        System.out.println(itemSpecIds);
+
+        if (StringUtils.isBlank(itemSpecIds)) {
+            return JSONResult.ok();
+        }
+
+        List<ItemsSpec> itemsSpecs = itemService.queryItemSpecList(itemSpecIds);
+
+
+        return JSONResult.ok(itemsSpecs);
     }
 }

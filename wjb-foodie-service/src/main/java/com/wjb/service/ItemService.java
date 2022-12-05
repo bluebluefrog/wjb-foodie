@@ -6,6 +6,7 @@ import com.wjb.pojo.ItemsParam;
 import com.wjb.pojo.ItemsSpec;
 import com.wjb.pojo.vo.CommentLevelCountsVO;
 import com.wjb.pojo.vo.ItemCommentVO;
+import com.wjb.pojo.vo.ShopcartVO;
 import com.wjb.utils.PagedGridResult;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,4 +30,7 @@ public interface ItemService {
     PagedGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize);
 
     PagedGridResult catItems(String catId, String sort, Integer page, Integer pageSize);
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    List<ShopcartVO> queryItemsBySpecId(String specIds);
 }
